@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react"
+import Tabla from "./Tabla"
+import Form from "./Form"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    state = {
+        personas: []
+    }
+
+    eliminarPersona = (indice) => {
+        const { personas } = this.state
+
+        this.setState({
+            personas: personas.filter((personas, i) => {
+                return i !== indice;
+            })
+        })
+    }
+
+    enviarFormulario = (persona) => {
+        this.setState({ personas: [...this.state.personas, persona] })
+    }
+
+    render() {
+        const { personas } = this.state
+
+        return (
+            <div className="container">
+                <h1>Tutorial de React de Neogias!</h1>
+                <Tabla datosPersonas={personas} eliminarPersona={this.eliminarPersona} />
+                <Form enviarFormulario={this.enviarFormulario}/>
+            </div>
+        )
+    }
 }
 
-export default App;
+export default App
